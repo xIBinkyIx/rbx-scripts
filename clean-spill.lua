@@ -1,6 +1,3 @@
--- Import the ImGUI library
-local ImGUI = require(script.ImGUI)
-
 -- Configuration
 local partNamePrefix = "MyPart" -- Change this to the prefix of the part names you want to find
 local activationKey = Enum.KeyCode.E -- Change this to the key you want to press to activate the part
@@ -57,14 +54,27 @@ local function loopScript()
     end
 end
 
--- Function to draw the GUI
-local function drawGUI()
-    ImGUI.Begin("Part Finder")
-    if ImGUI.Button("Find Part") then
-        loopScript()
-    end
-    ImGUI.End()
-end
+-- Create the UI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.StarterGui
 
--- Connect the GUI to the RenderStepped event
-game:GetService("RunService").RenderStepped:Connect(drawGUI)
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 200, 0, 100)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+Frame.BackgroundTransparency = 0.5
+Frame.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
+Frame.Parent = ScreenGui
+
+local Button = Instance.new("TextButton")
+Button.Size = UDim2.new(0, 100, 0, 50)
+Button.Position = UDim2.new(0.5, -50, 0.5, -25)
+Button.Text = "Find Part"
+Button.Font = Enum.Font.SourceSans
+Button.FontSize = Enum.FontSize.Size24
+Button.TextColor3 = Color3.new(1, 1, 1)
+Button.BackgroundTransparency = 0.5
+Button.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+Button.Parent = Frame
+
+-- Connect the button to the loopScript function
+Button.MouseButton1Click:Connect(loopScript)
